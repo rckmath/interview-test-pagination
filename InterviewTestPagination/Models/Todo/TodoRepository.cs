@@ -1,6 +1,8 @@
-﻿using System;
+﻿using InterviewTestPagination.Search.Todo;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace InterviewTestPagination.Models.Todo {
@@ -11,7 +13,7 @@ namespace InterviewTestPagination.Models.Todo {
     /// (e.g. dont create new model instances when executing a search 'query', etc).
     /// TL;DR: from this point on Database-like operations can be mocked.
     /// </summary>
-    public class TodoRepository : IModelRepository<Todo> {
+    public class TodoRepository : ITodoRepository {
 
         /// <summary>
         /// Example in-memory model datasource 'indexed' by id.
@@ -27,9 +29,42 @@ namespace InterviewTestPagination.Models.Todo {
             }
         }
 
-        public IEnumerable<Todo> All() {
+        public IEnumerable<Todo> All()
+        {
             return DataSource.Values.OrderByDescending(t => t.CreatedDate);
         }
 
+        public IQueryable<Todo> FindAll(bool isDesc, string orderBy)
+        {
+            var query = DataSource.Values.AsQueryable().AsNoTracking();
+
+            switch (orderBy)
+            {
+                case "ID":
+                    query = isDesc
+                        ? query.OrderByDescending(t => t.Id)
+                        : query.OrderBy(t => t.Id);
+                    break;
+                case "TASK":
+                    query = isDesc
+                        ? query.OrderByDescending(t => t.Task)
+                        : query.OrderBy(t => t.Task);
+                    break;
+                case "CREATEDDATE":
+                    query = isDesc
+                        ? query.OrderByDescending(t => t.CreatedDate)
+                        : query.OrderBy(t => t.CreatedDate);
+                    break;
+                default:
+                    query = query.OrderByDescending(t => t.CreatedDate);
+                    break;
+            }
+
+            return query;
+        }
+
+        public PagedResult<Todo> AllPaged(IQueryable<Todo> query, TodoSearch todoSearch) {
+            return PagedResult<Todo>.GetPagedList(query, todoSearch.CurrentPage, todoSearch.PageSize);
+        }
     }
 }
