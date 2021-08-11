@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
+using InterviewTestPagination.Search.Todo;
 
-namespace InterviewTestPagination.Models {
+namespace InterviewTestPagination.Models.Todo {
     /// <summary>
     /// Model Service layer's main entry-point. 
     /// Should translate high-level commands and data structures into something that can be used by the data source layer.
-    /// TODO: create appropriate method signatures
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface IModelService<T> {
+    /// <typeparam name="Todo"></typeparam>
+    public interface ITodoService : IModelService<Todo> {
 
         /// <summary>
-        /// Example signature of a method that lists entries of model T
+        /// Example signature of a method that lists entries of model Todo
         /// </summary>
         /// <returns></returns>
-        IEnumerable<T> List();
+        PagedResult<Todo> ListPaged(TodoSearch todoSearch);
     }
 }
