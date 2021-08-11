@@ -3,33 +3,26 @@
 
     angular
         .module("todoApp")
-        .directive("pagination", [pagination]);
+        .directive("todoPaginatedList", [todoPaginatedListDirective]);
 
     /**
-     * Directive definition function of 'pagination' directive.
-     * 
-     * TODO: make it a reusable component (i.e. usable by any list of objects not just the Models.Todo model)
+     * Directive definition function of 'todoPaginatedList'.
+     *
      * TODO: correctly parametrize scope (inherited? isolated? which properties?)
      * TODO: create appropriate functions (link? controller?) and scope bindings
      * TODO: make appropriate general directive configuration (support transclusion? replace content? EAC?)
-     * 
+     *
      * @returns {} directive definition object
      */
-    function pagination() {
-        var directive = {
+    function todoPaginatedListDirective() {
+        return {
             restrict: "E", // example setup as an element only
-            templateUrl: "app/templates/pagination.html",
+            templateUrl: "app/templates/todo.list.paginated.html",
             scope: {}, // example empty isolate scope
-            controller: ["$scope", controller],
-            link: link
+            controller: "todoPaginatedListController",
+            link: (scope, element, attrs) => { }
         };
-
-        function controller($scope) { }
-
-        function link(scope, element, attrs) { }
-
-        return directive;
     }
 
-})(angular);
 
+})(angular);
