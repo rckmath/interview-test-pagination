@@ -15,7 +15,7 @@
                 method: 'GET',
                 url: 'api/Todo/Todos',
                 params: queryParams || undefined,
-            })
+            });
         }
     }
 
