@@ -87,9 +87,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.module.js" />
+    <Content Include="app\controllers\pagination.controller.js" />
     <Content Include="app\controllers\todoPaginatedList.controller.js" />
-	<Content Include="app\directives\todoPaginatedList.directive.js" />
-    <Content Include="app\main.js" />
+    <Content Include="app\directives\pagination.directive.js" />
+    <Content Include="app\directives\todoPaginatedList.directive.js" />
     <Content Include="app\services\todoPaginatedList.service.js" />
     <Content Include="app\styles\styles.css" />
     <Content Include="app\templates\pagination.html" />

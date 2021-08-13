@@ -16,19 +16,12 @@
      * @returns {} directive definition object
      */
     function pagination() {
-        var directive = {
+        return {
             restrict: "E", // example setup as an element only
             templateUrl: "app/templates/pagination.html",
-            scope: {}, // example empty isolate scope
-            controller: ["$scope", controller],
-            link: link
+            controller: "pagination",
+            link: (scope, element, attrs) => { }
         };
-
-        function controller($scope) { }
-
-        function link(scope, element, attrs) { }
-
-        return directive;
     }
 
 })(angular);

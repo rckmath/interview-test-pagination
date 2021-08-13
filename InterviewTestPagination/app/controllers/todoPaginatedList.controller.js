@@ -6,9 +6,10 @@
         .controller("todoPaginatedListController", todoPaginatedListController);
 
     function todoPaginatedListController($scope, todoPaginatedListService) {
-        $scope.todo = {};
-        $scope.ordering = 'desc';
         $scope.key;
+        $scope.todo = {};
+        $scope.queryParams = {};
+        $scope.ordering = 'desc';
 
         $scope.orderBy = orderBy;
         $scope.getOrderingClass = getOrderingClass;
@@ -49,15 +50,12 @@
 
             invertOrdering(key);
 
-            var queryParams = {
-                page: 1,
-                pageSize: $scope.todo.pageSize,
-                orderBy: key, ordering: $scope.ordering,
-            };
-
-            todoPaginatedListService.getTodos(queryParams).then(res => $scope.todo = res.data);
-
             $scope.key = key;
+            $scope.queryParams.orderBy = $scope.key;
+            $scope.queryParams.ordering = $scope.ordering;
+            $scope.queryParams.currentPage = 1;
+
+            todoPaginatedListService.getTodos($scope.queryParams).then(res => $scope.todo = res.data);
         }
     }
 
