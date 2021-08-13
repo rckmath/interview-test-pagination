@@ -4,41 +4,44 @@ using System.Linq;
 
 namespace InterviewTestPagination.Models.Todo {
     /// <summary>
-    /// TODO: Implement methods that enable pagination
+    /// Todo Service Service layer extending from ITodoService interface that implements the base IModelService. 
     /// </summary>
     public class TodoService : ITodoService {
+        private readonly ITodoRepository _todoRepository;
 
-        private ITodoRepository _repository = new TodoRepository();
-
-        public ITodoRepository Repository {
-            get { return _repository; }
-            set { _repository = value; }
+        public TodoService(ITodoRepository todoRepository) {
+            _todoRepository = todoRepository;
         }
 
         /// <summary>
         /// Example implementation of List method: lists all entries of type <see cref="Todo"/>
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Todo> List() {
+        public IEnumerable<Todo> List()
+        {
             // invoke Datasource layer
-            return Repository.All();
+            return _todoRepository.All();
         }
-        
+
         /// <summary>
-        /// Example implementation of List method: lists all entries of type <see cref="Todo"/>
+        /// Lsists with pagination all entries of type <see cref="Todo"/>
         /// </summary>
-        /// <returns></returns>
-        public PagedResult<Todo> ListPaged(TodoSearch todoSearch) {
+        /// <returns>
+        /// Paged list of model <see cref="Todo"/>, in the <see cref="PagedResult{T}"/> standards
+        /// </returns>
+        public PagedResult<Todo> ListPaged(TodoSearch todoSearch)
+        {
             var isDescending = todoSearch.IsDesc();
 
-            var query = Repository.FindAll(isDescending, todoSearch.OrderBy.ToUpper());
+            var query = _todoRepository.FindAll(isDescending, todoSearch.OrderBy.ToUpper());
 
             if (todoSearch.PageSize == 0)
             {
                 todoSearch.PageSize = query.Count();
             }
+
             // invoke Datasource layer
-            return Repository.AllPaged(query, todoSearch);
+            return _todoRepository.AllPaged(query, todoSearch);
         }
     }
 }

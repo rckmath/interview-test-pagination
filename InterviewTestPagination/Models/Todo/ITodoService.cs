@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using InterviewTestPagination.Search.Todo;
+﻿using InterviewTestPagination.Search.Todo;
 
 namespace InterviewTestPagination.Models.Todo {
     /// <summary>
@@ -12,7 +11,9 @@ namespace InterviewTestPagination.Models.Todo {
         /// <summary>
         /// Example signature of a method that lists entries of model Todo
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// Paged list of model <see cref="Todo"/>, in the <see cref="PagedResult{T}"/> standards
+        /// </returns>
         PagedResult<Todo> ListPaged(TodoSearch todoSearch);
     }
 }
