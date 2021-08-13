@@ -9,10 +9,16 @@ namespace InterviewTestPagination.Controllers {
     /// model.
     /// </summary>
     public class TodoController : ApiController {
-        private readonly ITodoService _todoService = new TodoService();
+        private readonly ITodoService _todoService;
+
+        public TodoController(ITodoService todoService)
+        {
+            _todoService = todoService;
+        }
 
         [HttpGet]
-        public PagedResult<Todo> Todos([FromUri] TodoSearch todoSearch) {
+        public PagedResult<Todo> Todos([FromUri] TodoSearch todoSearch)
+        {
             var response = _todoService.ListPaged(todoSearch);
 
             return response;
